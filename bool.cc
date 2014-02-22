@@ -19,9 +19,9 @@ template<typename F> class invoker_impl : public invoker {
   F f_;
 };
 
-template<typename F1, typename F2> class true_or_false_invoker_impl {
+template<typename F1, typename F2> class false_or_true_invoker_impl {
  public:
-  true_or_false_invoker_impl(F1 f1, F2 f2) {
+  false_or_true_invoker_impl(F1 f1, F2 f2) {
     invokers_.push_back(std::unique_ptr<invoker>(new invoker_impl<F1>(f1)));
     invokers_.push_back(std::unique_ptr<invoker>(new invoker_impl<F2>(f2)));
   }
@@ -34,7 +34,7 @@ template<typename F1, typename F2> class true_or_false_invoker_impl {
 };
 
 template<typename F1, typename F2> void conditional_on_false_or_true(bool a, F1 f1, F2 f2) {
-  true_or_false_invoker_impl<F1, F2> impl(f1, f2);
+  false_or_true_invoker_impl<F1, F2> impl(f1, f2);
   impl.invoke(a);
 }
 
