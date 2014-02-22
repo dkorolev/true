@@ -4,14 +4,14 @@
 
 class invoker {
  public:
-  virtual void invoke() = 0;
+  virtual void invoke() const = 0;
 };
 
 template<typename F> class invoker_impl : public invoker {
  public:
   explicit invoker_impl(F f) : f_(f) {
   }
-  virtual void invoke() override {
+  virtual void invoke() const override {
     f_();
   }
 
@@ -25,7 +25,7 @@ template<typename F1, typename F2> class true_or_false_invoker_impl {
     invokers_.push_back(std::unique_ptr<invoker>(new invoker_impl<F1>(f1)));
     invokers_.push_back(std::unique_ptr<invoker>(new invoker_impl<F2>(f2)));
   }
-  void invoke(bool a) {
+  void invoke(bool a) const {
     invokers_[static_cast<size_t>(a)]->invoke();
   }
 
