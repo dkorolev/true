@@ -33,14 +33,14 @@ template<typename F1, typename F2> class true_or_false_invoker_impl {
   std::vector<std::unique_ptr<invoker>> invokers_;
 };
 
-template<typename F1, typename F2> void conditional_on_true_or_false(bool a, F1 f1, F2 f2) {
+template<typename F1, typename F2> void conditional_on_false_or_true(bool a, F1 f1, F2 f2) {
   true_or_false_invoker_impl<F1, F2> impl(f1, f2);
   impl.invoke(a);
 }
 
 int main() {
   const bool boolean_variable = (2*2 == 4);
-  conditional_on_true_or_false(
+  conditional_on_false_or_true(
     boolean_variable,
     [](){ std::cout << "False" << std::endl; },
     [](){ std::cout << "True" << std::endl; });
